@@ -83,64 +83,29 @@ public class TrainService {
         int count=0;
         for(Ticket ticket:bookedticket){
             if(ticket.getFromStation().equals(station)){
-                List<Passenger>passeng=ticket.getPassengersList();
-                count+=passeng.size();
+//                List<Passenger>passeng=ticket.getPassengersList();
+                count+=ticket.getPassengersList().size();
             }
         }
         return count;
-//        Optional<Train> trainOptional = trainRepository.findById(trainId);
-//        if(!trainOptional.isPresent()){
-//            throw new Exception("Train is not passing from this station");
-//        }
-//        Train train = trainOptional.get();
-//        String[] route = train.getRoute().split(",");
-//        boolean stationFound = false;
-//        for(String s : route){
-//            if(s.equals(station.toString())){
-//                stationFound = true;
-//            }
-//        }
-//        if(!stationFound){
-//            throw new Exception("Train is not available");
-//        }
-//        int peopleOnboarding = 0;
-//        for(Ticket ticket : train.getBookedTickets()){
-//            if(ticket.getFromStation().equals(station)){
-//                peopleOnboarding += ticket.getPassengersList().size();
-//            }
-//        }
-//        //in happy case
-//        return peopleOnboarding;
     }
 
     public Integer calculateOldestPersonTravelling(Integer trainId){
-//        Train train=trainRepository.getOne(trainId);
-//        if(train==null) throw new RuntimeException();
+        Optional<Train> trainOptional=trainRepository.findById(trainId);
+        if(!trainOptional.isPresent()) throw new RuntimeException();
 //        //Throughout the journey of the train between any 2 stations
 //        //We need to find out the age of the oldest person that is travelling the train
 //        //If there are no people travelling in that train you can return 0
-//        int age=0;
-//        List<Ticket>bookedticket=train.getBookedTickets();
-//        for(Ticket ticket:bookedticket){
+        int age=0;
+        Train train =trainOptional.get();
+        List<Ticket>bookedticket=train.getBookedTickets();
+        for(Ticket ticket:bookedticket){
 //            List<Passenger>passeng=ticket.getPassengersList();
-//            for(Passenger passenger:passeng){
-//                age=Math.max(age,passenger.getAge());
-//            }
-//        }
-//        return age;
-        Optional<Train> trainOptional = trainRepository.findById(trainId);
-        if(!trainOptional.isPresent()){
-            throw new RuntimeException();
-        }
-        Train train = trainOptional.get();
-        List<Ticket> tickets = train.getBookedTickets();
-        int maxAge = Integer.MIN_VALUE;
-        for(Ticket ticket : tickets){
-            for(Passenger passenger : ticket.getPassengersList()){
-                maxAge = Math.max(maxAge, passenger.getAge());
+            for(Passenger passenger:ticket.getPassengersList()){
+                age=Math.max(age,passenger.getAge());
             }
         }
-        return maxAge;
+        return age;
     }
 
     public List<Integer> trainsBetweenAGivenTime(Station station, LocalTime startTime, LocalTime endTime){
