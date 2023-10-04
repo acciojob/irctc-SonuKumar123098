@@ -114,45 +114,45 @@ public class TrainService {
         //You can assume that the date change doesn't need to be done ie the travel will certainly happen with the same date (More details
         //in problem statement)
         //You can also assume the seconds and milli seconds value will be 0 in a LocalTime format.
-//        List<Integer>ans=new ArrayList<>();
-//        List<Train>trainList=trainRepository.findAll();
-//        for(Train train:trainList){
-//            String route=train.getRoute();
-//            String[]arr=route.split((","));
-//            int hr=0;
-//            boolean pass=false;
-//            for(int i=0;i< arr.length;i++){
-//                if(arr[i].equals(station.toString())){
-//                    pass=true;
-//                    hr=i;
-//                    break;
-//                }
-//            }
-//            if(pass){
-//                LocalTime time=train.getDepartureTime();
-//                time.plusHours(hr);
-//                if(startTime.compareTo(time)<=0 && endTime.compareTo(time)>=0){
-//                    ans.add(train.getTrainId());
-//                }
-//            }
-//        }
-//
-//        return ans;
-        List<Train> trainList = trainRepository.findAll();
-        //creating list of all trains with their Id
-        List<Integer> trainIdList = new ArrayList<>();
-        for (Train train: trainList){
-            String []trainRoutArr = train.getRoute().split(",");
-            List<String> trainRoutList = Arrays.asList(trainRoutArr);
-            if (trainRoutList.contains(station.toString())){
-                LocalTime stationArrivalTime =
-                        train.getDepartureTime().plusHours(trainRoutList.indexOf(station.toString()));
-                if(stationArrivalTime.compareTo(startTime)>=0 && stationArrivalTime.compareTo(endTime)<=0){
-                    trainIdList.add(train.getTrainId());
+        List<Integer>trainIds=new ArrayList<>();
+        List<Train>trainList=trainRepository.findAll();
+        for(Train train:trainList){
+            String route=train.getRoute();
+            String[]arr=route.split((","));
+            int hr=0;
+            boolean pass=false;
+            for(int i=0;i< arr.length;i++){
+                if(arr[i].equals(station.toString())){
+                    pass=true;
+                    hr=i;
+                    break;
+                }
+            }
+            if(pass){
+                LocalTime time=train.getDepartureTime();
+                time.plusHours(hr);
+                if(startTime.compareTo(time)<=0 && endTime.compareTo(time)>=0){
+                    trainIds.add(train.getTrainId());
                 }
             }
         }
-        return trainIdList;
+//
+        return trainIds;
+//        List<Train> trainList = trainRepository.findAll();
+        //creating list of all trains with their Id
+//        List<Integer> trainIdList = new ArrayList<>();
+//        for (Train train: trainList){
+//            String []trainRoutArr = train.getRoute().split(",");
+//            List<String> trainRoutList = Arrays.asList(trainRoutArr);
+//            if (trainRoutList.contains(station.toString())){
+//                LocalTime stationArrivalTime =
+//                        train.getDepartureTime().plusHours(trainRoutList.indexOf(station.toString()));
+//                if(stationArrivalTime.compareTo(startTime)>=0 && stationArrivalTime.compareTo(endTime)<=0){
+//                    trainIdList.add(train.getTrainId());
+//                }
+//            }
+//        }
+//        return trainIdList;
     }
 
 }
