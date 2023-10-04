@@ -45,7 +45,7 @@ public class TicketService {
             if(indexOfDestination==-1 && arr[i].equals(destination.toString())){
                 indexOfDestination=i;
             }
-            if(indexOfStarting==-1 && arr[i].equals(start)){
+            if(indexOfStarting==-1 && arr[i].equals(start.toString())){
                 indexOfStarting=i;
             }
         }

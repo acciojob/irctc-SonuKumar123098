@@ -143,21 +143,24 @@ public class TrainService {
         for(Train train:trainList){
             String route=train.getRoute();
             String[]arr=route.split((","));
+            int hr=0;
             boolean pass=false;
-            for(String location:arr){
-                if(location.equals(station.toString())){
+            for(int i=0;i< arr.length;i++){
+                if(arr[i].equals(station.toString())){
                     pass=true;
+                    hr=i;
                     break;
                 }
             }
             if(pass){
-                LocalTime end=train.getDepartureTime();
-                end.plusHours(arr.length-1);
-                if(startTime.compareTo(train.getDepartureTime())<=0 && endTime.compareTo(end)>=0){
+                LocalTime time=train.getDepartureTime();
+                time.plusHours(hr);
+                if(startTime.compareTo(time)<=0 && endTime.compareTo(time)>=0){
                     ans.add(train.getTrainId());
                 }
             }
         }
+
         return ans;
     }
 
