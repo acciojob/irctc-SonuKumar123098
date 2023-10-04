@@ -64,52 +64,52 @@ public class TrainService {
     public Integer calculatePeopleBoardingAtAStation(Integer trainId,Station station) throws Exception{
 
         //We need to find out the number of people who will be boarding a train from a particular station
-//        Train train=trainRepository.getOne(trainId);
-//        if(train==null) return 0;
+        Train train=trainRepository.getOne(trainId);
+        if(train==null) throw new Exception("train not available");
 //        //if the trainId is not passing through that station
 //        //throw new Exception("Train is not passing from this station");
 //        //  in a happy case we need to find out the number of such people.
-//        String route=train.getRoute();
-//        String[]arr=route.split(",");
-//        boolean passing=false;
-//        for(String start:arr){
-//            if(start.equals(station.toString())) passing=true;
-//        }
-//        if(passing==false){
-//            throw new Exception("Train is not passing from this station");
-//        }
-//        List<Ticket>bookedticket=train.getBookedTickets();
-//        int count=0;
-//        for(Ticket ticket:bookedticket){
-//            if(ticket.getFromStation().toString().equals(station.toString())){
-//                List<Passenger>passeng=ticket.getPassengersList();
-//                count+=passeng.size();
-//            }
-//        }
-//        return count;
-        Optional<Train> trainOptional = trainRepository.findById(trainId);
-        if(!trainOptional.isPresent()){
+        String route=train.getRoute();
+        String[]arr=route.split(",");
+        boolean passing=false;
+        for(String start:arr){
+            if(start.equals(station.toString())) passing=true;
+        }
+        if(passing==false){
             throw new Exception("Train is not passing from this station");
         }
-        Train train = trainOptional.get();
-        String[] route = train.getRoute().split(",");
-        boolean stationFound = false;
-        for(String s : route){
-            if(s.equals(station.toString())){
-                stationFound = true;
-            }
-        }
-        if(!stationFound){
-            throw new Exception("Train is not available");
-        }
-        int peopleOnboarding = 0;
-        for(Ticket ticket : train.getBookedTickets()){
+        List<Ticket>bookedticket=train.getBookedTickets();
+        int count=0;
+        for(Ticket ticket:bookedticket){
             if(ticket.getFromStation().equals(station)){
-                peopleOnboarding += ticket.getPassengersList().size();
+                List<Passenger>passeng=ticket.getPassengersList();
+                count+=passeng.size();
             }
         }
-        //in happy case
-        return peopleOnboarding;
+        return count;
+//        Optional<Train> trainOptional = trainRepository.findById(trainId);
+//        if(!trainOptional.isPresent()){
+//            throw new Exception("Train is not passing from this station");
+//        }
+//        Train train = trainOptional.get();
+//        String[] route = train.getRoute().split(",");
+//        boolean stationFound = false;
+//        for(String s : route){
+//            if(s.equals(station.toString())){
+//                stationFound = true;
+//            }
+//        }
+//        if(!stationFound){
+//            throw new Exception("Train is not available");
+//        }
+//        int peopleOnboarding = 0;
+//        for(Ticket ticket : train.getBookedTickets()){
+//            if(ticket.getFromStation().equals(station)){
+//                peopleOnboarding += ticket.getPassengersList().size();
+//            }
+//        }
+//        //in happy case
+//        return peopleOnboarding;
     }
 
     public Integer calculateOldestPersonTravelling(Integer trainId){
