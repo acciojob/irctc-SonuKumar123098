@@ -19,6 +19,13 @@ public class PassengerService {
         Passenger pass=new Passenger(0,passenger.getName(),passenger.getAge(),new ArrayList<>());
         Passenger saved=passengerRepository.save(pass);
         return saved.getPassengerId();
+//        Passenger newPassanger = new Passenger();
+//        newPassanger.setName(passenger.getName());
+//        newPassanger.setAge(passenger.getAge());
+//        newPassanger.setBookedTickets(new ArrayList<>());
+//        // save newPassenger
+//        Passenger savedPassenger = passengerRepository.save(newPassanger);
+//        return savedPassenger.getPassengerId();
     }
 
 }
