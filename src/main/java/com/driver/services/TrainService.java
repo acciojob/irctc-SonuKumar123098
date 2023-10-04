@@ -37,8 +37,8 @@ public class TrainService {
     }
 
     public Integer calculateAvailableSeats(SeatAvailabilityEntryDto seatAvailabilityEntryDto){
-        Train train=trainRepository.getOne(seatAvailabilityEntryDto.getTrainId());
-        if(train==null) return 0;
+        Optional<Train>trainOptional=trainRepository.findById(seatAvailabilityEntryDto.getTrainId());
+        if(!trainOptional.isPresent()) return 0;
 //        //Calculate the total seats available
 //        //Suppose the route is A B C D
 //        //And there are 2 seats avaialble in total in the train
@@ -86,7 +86,7 @@ public class TrainService {
 //        if(!trainOptional.isPresent()){
 //            return 0;
 //        }
-//        Train train = trainOptional.get();
+        Train train = trainOptional.get();
         int totalSeats = train.getNoOfSeats();
         Station from = seatAvailabilityEntryDto.getFromStation();
         Station to = seatAvailabilityEntryDto.getToStation();
