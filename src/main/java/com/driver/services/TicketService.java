@@ -86,7 +86,7 @@ public class TicketService {
 
          Ticket savedTicket=ticketRepository.save(ticket);
          Train savedTrain=trainRepository.save(train);
-         return ticket.getTicketId();
+         return savedTicket.getTicketId();
         //Check for validity
         //Use bookedTickets List from the TrainRepository to get bookings done against that train
         // Incase the there are insufficient tickets
