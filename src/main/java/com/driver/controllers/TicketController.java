@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/ticket")
-public class gtiTicketController {
+public class TicketController {
 
     @Autowired
     TicketService ticketService;
