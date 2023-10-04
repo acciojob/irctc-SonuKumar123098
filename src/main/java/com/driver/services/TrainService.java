@@ -64,11 +64,12 @@ public class TrainService {
     public Integer calculatePeopleBoardingAtAStation(Integer trainId,Station station) throws Exception{
 
         //We need to find out the number of people who will be boarding a train from a particular station
-        Train train=trainRepository.getOne(trainId);
-        if(train==null) throw new Exception("train not available");
+        Optional<Train> trainOptional=trainRepository.findById(trainId);
+        if(!trainOptional.isPresent()) throw new Exception("train not available");
 //        //if the trainId is not passing through that station
 //        //throw new Exception("Train is not passing from this station");
 //        //  in a happy case we need to find out the number of such people.
+        Train train=trainOptional.get();
         String route=train.getRoute();
         String[]arr=route.split(",");
         boolean passing=false;
