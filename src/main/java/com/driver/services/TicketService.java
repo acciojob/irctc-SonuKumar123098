@@ -45,12 +45,12 @@ public class TicketService {
             if(indexOfDestination==-1 && arr[i].equals(destination.toString())){
                 indexOfDestination=i;
             }
-            if(indexOfStarting==-1 && arr[i].equals(start.toString())){
+            if(indexOfStarting==-1 && arr[i].equals(start)){
                 indexOfStarting=i;
             }
         }
-        if(indexOfDestination==-1 || indexOfStarting==-1 || indexOfStarting>indexOfDestination) throw new Exception("Invalid stations");
-        if(indexOfStarting==-1)return null;
+        if(indexOfDestination==-1 || indexOfStarting==-1 || indexOfStarting > indexOfDestination) throw new Exception("Invalid stations");
+//        if(indexOfStarting==-1)return null;
         int []pref=new int[arr.length];
         List<Ticket>bookedticket=train.getBookedTickets();
         for(Ticket ticket:bookedticket){
