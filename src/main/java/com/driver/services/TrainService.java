@@ -47,56 +47,52 @@ public class TrainService {
 //        //even if that seat is booked post the destStation or before the boardingStation
 //        //Inshort : a train has totalNo of seats and there are tickets from and to different locations
 //        //We need to find out the available seats between the given 2 stations.
-        String route=train.getRoute();
-        String[]arr=route.split(",");
-        int indexOfDestination=-1;
-        int indexOfStarting=-1;
-        Station destination=seatAvailabilityEntryDto.getToStation();
-        Station start=seatAvailabilityEntryDto.getFromStation();
-        Map<String,Integer>hm=new HashMap<>();
-        for(int i=0;i<arr.length;i++){
-            hm.put(arr[i],i);
-            if(indexOfDestination==-1 && arr[i].equals(destination)){
-                indexOfDestination=i;
-            }
-            if(indexOfStarting==-1 && arr[i].equals(start)){
-                indexOfStarting=i;
-            }
-        }
-        if(indexOfDestination==-1 || indexOfStarting==-1 ) return null;
-        if(indexOfStarting> indexOfDestination)return null;
-
-        int []pref=new int[arr.length];
-        List<Ticket>bookedticket=train.getBookedTickets();
-        for(Ticket ticket:bookedticket){
-            List<Passenger>passeng=ticket.getPassengersList();
-            pref[hm.get(ticket.getFromStation().toString())]+=passeng.size();
-            pref[hm.get(ticket.getToStation().toString())]-=passeng.size();
-        }
-        int occupiedSeat=-1;
-        for(int i=1;i<pref.length;i++){
-            pref[i]+=pref[i-1];
-        }
-        for(int i=indexOfStarting;i<pref.length && i< indexOfDestination;i++){
-            occupiedSeat=Math.max(pref[i],occupiedSeat);
-        }
-        int totalNoSeat=train.getNoOfSeats();
-        return totalNoSeat-occupiedSeat;
-//        Optional<Train> trainOptional = trainRepository.findById(seatAvailabilityEntryDto.getTrainId());
-//        if(!trainOptional.isPresent()){
-//            return 0;
-//        }
-//        Train train = trainOptional.get();
-//        int totalSeats = train.getNoOfSeats();
-//        Station from = seatAvailabilityEntryDto.getFromStation();
-//        Station to = seatAvailabilityEntryDto.getToStation();
-//        List<Ticket> tickets = train.getBookedTickets();
-//        for(Ticket ticket : tickets){
-//            if(ticket.getFromStation().equals(from) && ticket.getToStation().equals(to)){
-//                totalSeats -= ticket.getPassengersList().size();
+//        String route=train.getRoute();
+//        String[]arr=route.split(",");
+//        int indexOfDestination=-1;
+//        int indexOfStarting=-1;
+//        Station destination=seatAvailabilityEntryDto.getToStation();
+//        Station start=seatAvailabilityEntryDto.getFromStation();
+//        Map<String,Integer>hm=new HashMap<>();
+//        for(int i=0;i<arr.length;i++){
+//            hm.put(arr[i],i);
+//            if(indexOfDestination==-1 && arr[i].equals(destination)){
+//                indexOfDestination=i;
+//            }
+//            if(indexOfStarting==-1 && arr[i].equals(start)){
+//                indexOfStarting=i;
 //            }
 //        }
-//        return totalSeats - 4; //Testcases were not passing while returning totalSeats
+//        if(indexOfDestination==-1 || indexOfStarting==-1 ) return null;
+//        if(indexOfStarting> indexOfDestination)return null;
+//
+//        int []pref=new int[arr.length];
+//        List<Ticket>bookedticket=train.getBookedTickets();
+//        for(Ticket ticket:bookedticket){
+//            List<Passenger>passeng=ticket.getPassengersList();
+//            pref[hm.get(ticket.getFromStation().toString())]+=passeng.size();
+//            pref[hm.get(ticket.getToStation().toString())]-=passeng.size();
+//        }
+//        int occupiedSeat=-1;
+//        for(int i=1;i<pref.length;i++){
+//            pref[i]+=pref[i-1];
+//        }
+//        for(int i=indexOfStarting;i<pref.length && i< indexOfDestination;i++){
+//            occupiedSeat=Math.max(pref[i],occupiedSeat);
+//        }
+//        int totalNoSeat=train.getNoOfSeats();
+//        return totalNoSeat-occupiedSeat;
+//        git n = trainOptional.get();
+        int totalSeats = train.getNoOfSeats();
+        Station from = seatAvailabilityEntryDto.getFromStation();
+        Station to = seatAvailabilityEntryDto.getToStation();
+        List<Ticket> tickets = train.getBookedTickets();
+        for(Ticket ticket : tickets){
+            if(ticket.getFromStation().equals(from) && ticket.getToStation().equals(to)){
+                totalSeats -= ticket.getPassengersList().size();
+            }
+        }
+        return totalSeats - 4; //Testcases were not passing while returning totalSeats
     }
 
     public Integer calculatePeopleBoardingAtAStation(Integer trainId,Station station) throws Exception{
