@@ -20,37 +20,37 @@ public class TrainService {
     TrainRepository trainRepository;
 
     public Integer addTrain(AddTrainEntryDto trainEntryDto){
-        // route String logic to be taken from the Problem statement.
-//        StringBuilder sb=new StringBuilder();
-//        for(Station station:trainEntryDto.getStationRoute()){
-//            sb.append(station);
-//            sb.append(',');
-//        }
-//        sb.deleteCharAt(sb.length()-1);
-//        String route=sb.toString();
-//        Train train=new Train(0,route,new ArrayList<>(),trainEntryDto.getDepartureTime(),trainEntryDto.getNoOfSeats());
-//        //Add the train to the trainRepository
-//        Train savedTrain=trainRepository.save(train);
-//        //Save the train and return the trainId that is generated from the database.
-//        return  savedTrain.getTrainId();
-        //Avoid using the lombok library
-        Train train = new Train();
-
-        //extract the route of the train
-        StringBuilder trainRoute = new StringBuilder();
-        for(Station station : trainEntryDto.getStationRoute()){
-            trainRoute.append(station);
-            trainRoute.append(" ");
+//         route String logic to be taken from the Problem statement.
+        StringBuilder sb=new StringBuilder();
+        for(Station station:trainEntryDto.getStationRoute()){
+            sb.append(station);
+            sb.append(',');
         }
-
-        //set the train attributes
-        train.setRoute(trainRoute.toString());
-        train.setNoOfSeats(trainEntryDto.getNoOfSeats());
-        train.setDepartureTime(trainEntryDto.getDepartureTime());
-
-        //now save the train
-        Train savedTrain = trainRepository.save(train);
-        return savedTrain.getTrainId();
+        sb.deleteCharAt(sb.length()-1);
+        String route=sb.toString();
+        Train train=new Train(0,route,new ArrayList<>(),trainEntryDto.getDepartureTime(),trainEntryDto.getNoOfSeats());
+         //Add the train to the trainRepository
+        Train savedTrain=trainRepository.save(train);
+        //Save the train and return the trainId that is generated from the database.
+        return  savedTrain.getTrainId();
+        //Avoid using the lombok library
+//        Train train = new Train();
+//
+//        //extract the route of the train
+//        StringBuilder trainRoute = new StringBuilder();
+//        for(Station station : trainEntryDto.getStationRoute()){
+//            trainRoute.append(station);
+//            trainRoute.append(" ");
+//        }
+//
+//        //set the train attributes
+//        train.setRoute(trainRoute.toString());
+//        train.setNoOfSeats(trainEntryDto.getNoOfSeats());
+//        train.setDepartureTime(trainEntryDto.getDepartureTime());
+//
+//        //now save the train
+//        Train savedTrain = trainRepository.save(train);
+//        return savedTrain.getTrainId();
     }
 
     public Integer calculateAvailableSeats(SeatAvailabilityEntryDto seatAvailabilityEntryDto){
