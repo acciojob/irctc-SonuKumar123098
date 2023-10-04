@@ -66,8 +66,9 @@ public class TrainService {
                 indexOfStarting=i;
             }
         }
-        if(indexOfDestination==-1) return null;
-        if(indexOfStarting==-1)return null;
+        if(indexOfDestination==-1 || indexOfStarting==-1 ) return null;
+        if(indexOfStarting> indexOfDestination)return null;
+
         int []pref=new int[arr.length];
         List<Ticket>bookedticket=train.getBookedTickets();
         for(Ticket ticket:bookedticket){
