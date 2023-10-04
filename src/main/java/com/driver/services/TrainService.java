@@ -100,7 +100,7 @@ public class TrainService {
             }
         }
         if(!stationFound){
-            throw new Exception("Train is not passing from this station");
+            throw new Exception("Train is not available");
         }
         int peopleOnboarding = 0;
         for(Ticket ticket : train.getBookedTickets()){
