@@ -117,12 +117,11 @@ public class TrainService {
         List<Integer>trainIds=new ArrayList<>();
         List<Train>trainList=trainRepository.findAll();
         for(Train train:trainList){
-            String route=train.getRoute();
-            String[]arr=route.split((","));
+            String[] route=train.getRoute().split(",");
             int hr=0;
             boolean pass=false;
-            for(int i=0;i< arr.length;i++){
-                if(arr[i].equals(station.toString())){
+            for(int i=0;i< route.length;i++){
+                if(route[i].equals(station.toString())){
                     pass=true;
                     hr=i;
                     break;
