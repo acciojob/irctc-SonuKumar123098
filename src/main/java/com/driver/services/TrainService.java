@@ -118,40 +118,15 @@ public class TrainService {
         List<Train>trainList=trainRepository.findAll();
         for(Train train:trainList){
             String[] route=train.getRoute().split(",");
-            int hr=0;
-            boolean pass=false;
-            for(int i=0;i< route.length;i++){
-                if(route[i].equals(station.toString())){
-                    pass=true;
-                    hr=i;
-                    break;
-                }
-            }
-            if(pass){
-                LocalTime time=train.getDepartureTime();
-                time=time.plusHours(hr);
+            List<String> trainRouteList=Arrays.asList(route);
+            if(trainRouteList.contains(station.toString())){
+                LocalTime time=train.getDepartureTime().plusHours(trainRouteList.indexOf(station.toString()));
                 if(startTime.compareTo(time)<=0 && endTime.compareTo(time)>=0){
                     trainIds.add(train.getTrainId());
                 }
             }
         }
-//
         return trainIds;
-//        List<Train> trainList = trainRepository.findAll();
-        //creating list of all trains with their Id
-//        List<Integer> trainIdList = new ArrayList<>();
-//        for (Train train: trainList){
-//            String []trainRoutArr = train.getRoute().split(",");
-//            List<String> trainRoutList = Arrays.asList(trainRoutArr);
-//            if (trainRoutList.contains(station.toString())){
-//                LocalTime stationArrivalTime =
-//                        train.getDepartureTime().plusHours(trainRoutList.indexOf(station.toString()));
-//                if(stationArrivalTime.compareTo(startTime)>=0 && stationArrivalTime.compareTo(endTime)<=0){
-//                    trainIdList.add(train.getTrainId());
-//                }
-//            }
-//        }
-//        return trainIdList;
     }
 
 }
