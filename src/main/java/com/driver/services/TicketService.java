@@ -48,25 +48,26 @@ public class TicketService {
         }
         if(indexOfDestination==-1 || indexOfStarting==-1 || indexOfStarting > indexOfDestination) throw new Exception("Invalid stations");
 //        if(indexOfStarting==-1)return null;
-        int []pref=new int[arr.length];
+//        int []pref=new int[arr.length];
         List<Ticket>bookedticket=train.getBookedTickets();
-        for(Ticket ticket:bookedticket){
-            List<Passenger>passeng=ticket.getPassengersList();
-            pref[hm.get(ticket.getFromStation().toString())]+=passeng.size();
-            pref[hm.get(ticket.getToStation().toString())]-=passeng.size();
-        }
+//        for(Ticket ticket:bookedticket){
+//            List<Passenger>passeng=ticket.getPassengersList();
+//            pref[hm.get(ticket.getFromStation().toString())]+=passeng.size();
+//            pref[hm.get(ticket.getToStation().toString())]-=passeng.size();
+//        }
         int occupiedSeat=-1;
-        for(int i=1;i<pref.length;i++){
-            pref[i]+=pref[i-1];
-        }
-        for(int i=indexOfStarting;i<pref.length && i< indexOfDestination;i++){
-            occupiedSeat=Math.max(pref[i],occupiedSeat);
-        }
+//        for(int i=1;i<pref.length;i++){
+//            pref[i]+=pref[i-1];
+//        }
+//        for(int i=indexOfStarting;i<pref.length && i< indexOfDestination;i++){
+//            occupiedSeat=Math.max(pref[i],occupiedSeat);
+//        }
+        occupiedSeat=bookedticket.size();
         int totalNoSeat=train.getNoOfSeats();
          if(totalNoSeat-occupiedSeat<bookTicketEntryDto.getNoOfSeats()){
              throw new Exception("Less tickets are available");
          }
-         int fare=(indexOfDestination-indexOfStarting)*300;
+         int fare=(indexOfDestination-indexOfStarting)*300*bookTicketEntryDto.getNoOfSeats();
          List<Passenger>passengerList=new ArrayList<>();
          for(int id:bookTicketEntryDto.getPassengerIds()){
              passengerList.add(passengerRepository.getOne(id));
